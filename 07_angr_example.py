@@ -1,9 +1,9 @@
 import subprocess
 import angr
 
-subprocess.run("gcc -o bin/05_angr_example 05_angr_example.c", shell=True)
+subprocess.run("gcc -o bin/07_angr_example 07_angr_example.c", shell=True)
 
-proj = angr.Project("bin/05_angr_example")
+proj = angr.Project("bin/07_angr_example")
 
 state = proj.factory.entry_state()
 simgr = proj.factory.simulation_manager(state)

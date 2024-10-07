@@ -6,10 +6,10 @@ from extract_data import FLAG_LEN, get_table
 elf = ELF("./checker")
 update = elf.read(elf.symbols["update"], 0x7a9)
 
-subprocess.run(f"gcc -z execstack -DFUNC={','.join(map(str, update))} -o bin/06_executor 06_executor.c 2>/dev/null", shell=True)
+subprocess.run(f"gcc -z execstack -DFUNC={','.join(map(str, update))} -o bin/05_executor 05_executor.c 2>/dev/null", shell=True)
 
 def compute(state: bytes, c: int):
-  res = subprocess.run("bin/06_executor", input=state + bytes([c]), capture_output=True).stdout
+  res = subprocess.run("bin/05_executor", input=state + bytes([c]), capture_output=True).stdout
   return res
 
 table = get_table()

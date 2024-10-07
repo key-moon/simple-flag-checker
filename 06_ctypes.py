@@ -7,10 +7,10 @@ from extract_data import FLAG_LEN, get_table
 bin = lief.parse("./checker")
 bin.add_exported_function(bin.get_function_address("update"), "update")
 bin[lief.ELF.DynamicEntry.TAG.FLAGS_1].remove(lief.ELF.DynamicEntryFlags.FLAG.PIE)
-bin.write("bin/07_checker.so")
+bin.write("bin/06_checker.so")
 
 HASH_LEN = 32
-lib = ctypes.CDLL('bin/07_checker.so')
+lib = ctypes.CDLL('bin/06_checker.so')
 
 def update(state: bytes, c: int):
   state_array = ctypes.create_string_buffer(state)
