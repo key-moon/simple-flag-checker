@@ -6,7 +6,7 @@ from extract_data import FLAG_LEN
 proj = angr.Project("checker")
 
 AT_CHR_LOAD = 0x401a08
-AFTER_MEMCPY = 0x401a2f
+AFTER_MEMCMP = 0x401a2f
 
 t = tqdm(total=FLAG_LEN)
 def step_func(lsm: angr.SimulationManager):
@@ -23,7 +23,7 @@ def step_func(lsm: angr.SimulationManager):
     return states
 
   def remove_non_zero(state: angr.SimState):
-    if state.addr != AFTER_MEMCPY: return False
+    if state.addr != AFTER_MEMCMP: return False
     return state.regs.rax.concrete_value != 0
 
   lsm.apply(populate_next)
@@ -52,7 +52,7 @@ simgr.explore(
   # https://github.com/angr/angr/blob/9005e7186952d20f7a71f49d35744896ff978313/angr/engines/unicorn.py#L30
   extra_stop_points={
     AT_CHR_LOAD,
-    AFTER_MEMCPY,
+    AFTER_MEMCMP,
   }
 )
 t.close()

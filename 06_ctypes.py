@@ -9,7 +9,6 @@ bin.add_exported_function(bin.get_function_address("update"), "update")
 bin[lief.ELF.DynamicEntry.TAG.FLAGS_1].remove(lief.ELF.DynamicEntryFlags.FLAG.PIE)
 bin.write("bin/06_checker.so")
 
-HASH_LEN = 32
 lib = ctypes.CDLL('bin/06_checker.so')
 
 def update(state: bytes, c: int):
@@ -17,10 +16,11 @@ def update(state: bytes, c: int):
   lib.update(state_array, ctypes.c_char(bytes([c])))
   return bytes(state_array)
 
+HASH_LEN = 36
 table = get_table()
 
 flag = ""
-state = b"\x00" * 36
+state = b"\x00" * HASH_LEN
 for i in tqdm(range(FLAG_LEN)):
   for c in range(0x20, 0xff):
     next_state = update(state, c)
